@@ -24,6 +24,22 @@ def health():
     response_pickled = jsonpickle.encode(response)
     return Response(response=response_pickled, status=status, mimetype='application/json')
 
+@app.route('/multiply/<int:x>/<int:y>', methods=["GET"])
+def multiply(x, y):
+    status = 200
+    try:
+        response = {
+            'data' : x * y
+        }
+    except Exception as error:
+        response = { 
+            'error' : error 
+        }
+        status = 500
+    response_pickled = jsonpickle.encode(response)
+    return Response(response=response_pickled, status=status, mimetype='application/json')
+   
+
 def main():
     app.run(host="0.0.0.0", port=5000)
 
