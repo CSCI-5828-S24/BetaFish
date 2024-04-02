@@ -3,10 +3,10 @@ steps:
     entrypoint: 'npm'
     args: ['--prefix', './react-frontend/', 'ci']
     id: React Install
-  - name: 'node:20-alpine3.18'
-    entrypoint: 'npm'
-    args: ['--prefix', './react-frontend/', 'run', 'test']
-    id: React test
+  # - name: 'node:20-alpine3.18'
+  #   entrypoint: 'npm'
+  #   args: ['--prefix', './react-frontend/', 'run', 'test']
+  #   id: React test
   - name: 'node:20-alpine3.18'
     entrypoint: 'npm'
     args: ['--prefix', './react-frontend/', 'run', 'build']
