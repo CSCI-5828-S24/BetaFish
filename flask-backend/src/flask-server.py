@@ -3,13 +3,20 @@ from flask_cors import CORS
 import jsonpickle
 import os
 
-app = Flask(__name__)
-CORS(app, origins=["http://localhost:4200"])
+app = Flask(__name__, static_folder="../../react-frontend/build", static_url_path='/')
+CORS(app, origins=["*"])
+
+"""
+Hosting web pages from Flask itself
+"""
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 """
 Health check endpoint for getting status of api
 """
-@app.route('/health', methods=["GET"])
+@app.route('/api/health', methods=["GET"])
 def health():
     status = 200
     try:
@@ -24,7 +31,7 @@ def health():
     response_pickled = jsonpickle.encode(response)
     return Response(response=response_pickled, status=status, mimetype='application/json')
 
-@app.route('/multiply/<int:x>/<int:y>', methods=["GET"])
+@app.route('/api/multiply/<int:x>/<int:y>', methods=["GET"])
 def multiply(x, y):
     status = 200
     try:
