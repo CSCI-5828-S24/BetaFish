@@ -42,3 +42,6 @@ docker run -p5000:5000 web-app
 ```
 
 Now, the web page should be accessible on port 5000 on localhost
+
+## Current Completed Architecture
+![image](https://github.com/CSCI-5828-S24/BetaFish/assets/143036094/8c079df8-c48f-47c8-950b-8148625e16a0)
