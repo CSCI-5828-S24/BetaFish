@@ -16,7 +16,7 @@ function App() {
 
 
   const handleClick = () => {
-    fetch(`${window.location.href}/api/multiply/${state.num1}/${state.num2}`)
+    fetch(`/api/multiply/${state.num1}/${state.num2}`)
       .then(response => response.json())
       .then(json => setState(prevState => {
         return {

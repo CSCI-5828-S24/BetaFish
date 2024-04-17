@@ -8,7 +8,7 @@ Below are the instruction run the we app locally on an linux/ubuntu platform
 Install the below packages before proceeding -
 1. Python3
 2. Python packages: redis jsonpickle requests flask flask_cors
-    > pip3 install --upgrade redis jsonpickle requests flask flask_cors
+    > pip3 install --upgrade redis jsonpickle requests flask flask_cors flask-mysqldb
 3. Node.js 20.x lts
 
 
@@ -30,7 +30,7 @@ Now there are two options:
 
 ## Run locally
 
-> python3 flask-backend/src/flask-server.pyv
+> python3 flask-backend/src/flask_server.py
 
 ## Run on Docker
 
