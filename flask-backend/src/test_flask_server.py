@@ -4,7 +4,6 @@ import tempfile
 import pytest
 
 from flask_server import create_app
-import jsonpickle
 
 @pytest.fixture
 def app():

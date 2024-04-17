@@ -81,6 +81,14 @@ def create_app():
             mysql.connection.commit()
 
     """
+    Hosting web pages from Flask itself
+    """
+    @app.route('/')
+    def index():
+        db_setup()
+        return app.send_static_file('index.html')
+
+    """
     Health check endpoint for getting status of api
     """
     @app.route('/api/health', methods=["GET"])
@@ -97,8 +105,7 @@ def create_app():
             status = 500
         response_pickled = jsonpickle.encode(response)
         return Response(response=response_pickled, status=status, mimetype='application/json')
-    
-    db_setup()
+
     return app
 
 
