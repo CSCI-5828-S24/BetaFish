@@ -45,6 +45,7 @@ def create_app():
 
             app.logger.info("Pull Data from API")
 
+            # TODO: decide the minimum number of rows we want in the table. Minimized due to space in Cloud SQL server
             init_num = 10
 
             newest = f"https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/ArcGIS/rest/services/ODC_CRIME_OFFENSES_P/FeatureServer/324/query?where=OBJECTID%3E%3D0&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=standard&distance=0.0&units=esriSRUnit_Meter&relationParam=&returnGeodetic=false&outFields=OBJECTID%2C+INCIDENT_ID%2C+OFFENSE_ID%2C+OFFENSE_CODE%2C+OFFENSE_CODE_EXTENSION%2C+OFFENSE_TYPE_ID%2C+OFFENSE_CATEGORY_ID%2C+FIRST_OCCURRENCE_DATE%2C+LAST_OCCURRENCE_DATE%2C+REPORTED_DATE%2C+INCIDENT_ADDRESS%2C+GEO_X%2C+GEO_Y%2C+GEO_LON%2C+GEO_LAT%2C+DISTRICT_ID%2C+PRECINCT_ID%2C+NEIGHBORHOOD_ID%2C+IS_CRIME%2C+IS_TRAFFIC%2C+VICTIM_COUNT&returnGeometry=false&featureEncoding=esriDefault&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=&defaultSR=&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnQueryGeometry=false&returnDistinctValues=false&cacheHint=false&orderByFields=OBJECTID+desc&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount={init_num}&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=standard&f=pjson&token="
@@ -52,13 +53,8 @@ def create_app():
             r = requests.post(newest)
             data = r.json()
 
-            # print(len(data["features"]))
-
             values = []
-
             entries = data['features']
-
-            
             for row in entries:
                 rowdata = list(row["attributes"].values())
 
@@ -125,6 +121,34 @@ def create_app():
         response_pickled = jsonpickle.encode(response)
         return Response(response=response_pickled, status=status, mimetype='application/json')
     
+
+    @app.route('/api/alldata', methods=["GET"])
+    def get_all():
+        status = 200
+        try:
+            cursor = mysql.connection.cursor()
+            cursor.execute("SELECT * FROM crime")
+            raw_data = cursor.fetchall()
+
+
+            # TODO: Make this actual data the front end can handle and not just an atrocious ongoing string
+            stringOut = ""
+            for row in raw_data:
+                for item in row:
+                    stringOut = stringOut + str(item) + ", "
+                stringOut = stringOut + "\n"
+
+            response = {
+                'data' : stringOut
+            }
+        except Exception as error:
+            response = { 
+                'error' : error 
+            }
+            status = 500
+        response_pickled = jsonpickle.encode(response)
+        return Response(response=response_pickled, status=status, mimetype='application/json')
+    
     return app
 
 
@@ -134,3 +158,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

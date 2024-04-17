@@ -14,6 +14,8 @@ function App() {
     product: null
   })
 
+  const [dataDump, setData] = useState(null)
+
 
   const handleClick = () => {
     fetch(`/api/multiply/${state.num1}/${state.num2}`)
@@ -24,6 +26,16 @@ function App() {
           product: json["data"]
         }
       }))
+      .catch(error => console.log(error));
+  }
+
+  const handleDump = () => {
+    fetch(`/api/alldata`)
+      .then(response => response.json())
+      .then(json => {
+        console.log(json["data"])
+        setData(json["data"])
+      })
       .catch(error => console.log(error));
   }
 
@@ -44,6 +56,10 @@ function App() {
         <input onChange={handleChange} type='number' id="number2-inp" name="num2" value={state.num2 === null? "":state.num2 as number}/>
         <button onClick={handleClick}>Check</button>
         <p id="multiply-results">{state.product}</p>
+      </div>
+      <div className="DataDump">
+        <button onClick={handleDump}>Database Dump</button>
+        <p id="dump">{dataDump}</p>
       </div>
     </div>
   );
