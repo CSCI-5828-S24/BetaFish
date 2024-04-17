@@ -9,4 +9,4 @@ EXPOSE 5000
 
 RUN pip3 install --upgrade redis jsonpickle requests flask flask_cors
 WORKDIR /flask-backend/src
-CMD ["python3", "flask-server.py"]
+CMD ["python3", "flask_server.py"]

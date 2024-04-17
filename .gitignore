@@ -25,3 +25,5 @@ replay_pid*
 
 .vscode/
 venv/
+
+__pycache__
