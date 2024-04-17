@@ -1,0 +1,1 @@
+Flask app that pulls data from crime API and sends it to MySQL database
