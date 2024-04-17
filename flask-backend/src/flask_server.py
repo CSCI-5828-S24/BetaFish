@@ -74,17 +74,23 @@ def create_app():
             cursor = mysql.connection.cursor()
             cursor.execute("SELECT * FROM crime")
             raw_data = cursor.fetchall()
+            row_headers = [x[0] for x in cursor.description]
+            print(row_headers)
+            json_data = []
+
+            for r in raw_data:
+                json_data.append(dict(zip(row_headers, r)))
 
 
             # TODO: Make this actual data the front end can handle and not just an atrocious ongoing string
-            stringOut = ""
-            for row in raw_data:
-                for item in row:
-                    stringOut = stringOut + str(item) + ", "
-                stringOut = stringOut + "\n"
+            # stringOut = ""
+            # for row in raw_data:
+            #     for item in row:
+            #         stringOut = stringOut + str(item) + ", "
+            #     stringOut = stringOut + "\n"
 
             response = {
-                'data' : stringOut
+                'data' : json_data
             }
         except Exception as error:
             response = { 

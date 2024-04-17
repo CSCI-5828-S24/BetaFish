@@ -21,6 +21,10 @@ def client(app):
 def runner(app):
     return app.test_cli_runner()
 
-def test_health_endpoint(client):
+def test_health_endpoint_works_as_expected(client):
     response = client.get("/api/health")
+    assert response.status_code is 200
+
+def test_all_data_endpoint_works_as_expected(client):
+    response = client.get("/api/alldata")
     assert response.status_code is 200
