@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
+import Search from './search/Search';
+import { GlobalState } from './types';
 
 type TGlobalState = {
   num1: number | null,
@@ -13,6 +15,16 @@ function App() {
     num2: null,
     product: null
   })
+
+  const [globalState, setGlobalState] = useState<GlobalState>({
+    filters: {
+      long: null,
+      lat: null,
+      startDate: null,
+      endDate: null
+    },
+    crimeList: []
+  });
 
   const [dataDump, setData] = useState(null)
 
@@ -50,6 +62,8 @@ function App() {
 
   return (
     <div className="App">
+      <Search globalState={globalState} setGlobalState={setGlobalState}/>
+
       <div className="MultiplySection">
         <p>Multiply:</p>
         <input onChange={handleChange} type='number' id="number1-inp" name="num1" value={state.num1 === null? "":state.num1 as number}/>
