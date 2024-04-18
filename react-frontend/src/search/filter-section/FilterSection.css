@@ -1,0 +1,7 @@
+#filter-section {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    width: 70vw;
+    margin: 5vh 0;
+}
