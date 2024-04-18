@@ -1,14 +1,12 @@
 from flask import Flask, request, Response
 from flask_cors import CORS
-import requests
 import jsonpickle
 import os
-import sys
 
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
-from flask_mysqldb import MySQL
+import mysql.connector
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -24,7 +22,14 @@ def create_app():
     app.config['MYSQL_PASSWORD'] = os.getenv("MYSQL_PASSWORD")
     app.config['MYSQL_DB'] = os.getenv("MYSQL_DB")
  
-    mysql = MySQL(app)
+    mydb = mysql.connector.connect(
+        host=os.getenv("MYSQL_HOST"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
+        database=os.getenv("MYSQL_DB")
+    )
+    # mysql = MySQL(app)
+    
 
     """
     Hosting web pages from Flask itself
@@ -71,7 +76,7 @@ def create_app():
     def get_all():
         status = 200
         try:
-            cursor = mysql.connection.cursor()
+            cursor = mydb.cursor()
             cursor.execute("SELECT * FROM crime")
             raw_data = cursor.fetchall()
             row_headers = [x[0] for x in cursor.description]
