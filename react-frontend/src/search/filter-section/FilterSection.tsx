@@ -4,6 +4,7 @@ import DatePicker from "react-date-picker";
 
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
+import "./FilterSection.css"
 
 const FilterSection = (props:GlobalStateProps) => {
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +27,7 @@ const FilterSection = (props:GlobalStateProps) => {
     }
 
     return (
-        <div>
+        <div id="filter-section">
             <input onChange={handleChange} className="textboxes" type="number" name="name" value={props.globalState.filters.long? "":props.globalState.filters.long as number} />
             <input className="textboxes" type="number" name="lat" value={props.globalState.filters.lat? "":props.globalState.filters.lat as number} />
             <DatePicker onChange={onDateChange.bind(null, "startDate")} value={props.globalState.filters.startDate} />
