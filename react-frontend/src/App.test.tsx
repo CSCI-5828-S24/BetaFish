@@ -2,8 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders Multiply Section', () => {
+test('renders Database Dump Section', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Multiply/i);
+  const linkElement = screen.getByText(/Database Dump/i);
   expect(linkElement).toBeInTheDocument();
 });
