@@ -3,12 +3,11 @@ from flask_cors import CORS
 import requests
 import jsonpickle
 import os
-import sys
 
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
-from flask_mysqldb import MySQL
+import mysql.connector
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -23,11 +22,16 @@ def create_app():
     app.config['MYSQL_USER'] = os.getenv("MYSQL_USER")
     app.config['MYSQL_PASSWORD'] = os.getenv("MYSQL_PASSWORD")
     app.config['MYSQL_DB'] = os.getenv("MYSQL_DB")
- 
-    mysql = MySQL(app)
+    
+    mydb = mysql.connector.connect(
+        host=os.getenv("MYSQL_HOST"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD")
+    )
+    # mysql = MySQL(app)
 
     def db_setup():
-        cursor = mysql.connection.cursor()
+        cursor = mydb.cursor()
         cursor.execute(f'CREATE DATABASE IF NOT EXISTS {os.getenv("MYSQL_DB")}')
         cursor.execute(f'USE {os.getenv("MYSQL_DB")}')
         cursor.execute('SHOW TABLES')
@@ -78,15 +82,15 @@ def create_app():
             app.logger.info("Initialize table data")
             cursor.execute(init_query)
 
-            mysql.connection.commit()
+            mydb.commit()
 
     """
     Hosting web pages from Flask itself
     """
-    @app.route('/')
+    @app.route('/api/updatedb')
     def index():
         db_setup()
-        return app.send_static_file('index.html')
+        return Response(response="done!", status=200)
 
     """
     Health check endpoint for getting status of api
