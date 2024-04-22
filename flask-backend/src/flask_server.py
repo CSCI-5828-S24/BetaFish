@@ -71,6 +71,37 @@ def create_app():
         response_pickled = jsonpickle.encode(response)
         return Response(response=response_pickled, status=status, mimetype='application/json')
     
+    @app.route('/api/crime_totals', methods=["GET"])
+    def get_crime_totals():
+        status = 200
+        try:
+            cursor = mydb.cursor()
+            cursor.execute("SELECT * FROM crime")
+            raw_data = cursor.fetchall()
+            row_headers = [x[0] for x in cursor.description]
+            print(row_headers)
+            json_data = []
+
+            for r in raw_data:
+                json_data.append(dict(zip(row_headers, r)))
+            
+            totals = {}
+            for item in json_data:
+                crime_category = item["OFFENSE_CATEGORY_ID"]
+                if (crime_category not in totals): totals[crime_category] = 1
+                else: totals[crime_category] += 1
+
+            response = {
+                'data' : totals
+            }
+        except Exception as error:
+            response = { 
+                'error' : error 
+            }
+            status = 500
+        response_pickled = jsonpickle.encode(response)
+        return Response(response=response_pickled, status=status, mimetype='application/json')
+       
 
     @app.route('/api/alldata', methods=["GET"])
     def get_all():
