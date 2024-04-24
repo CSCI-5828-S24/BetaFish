@@ -1,9 +1,6 @@
-import React from "react";
-import { DateValue, GlobalState, type GlobalStateProps } from "../../types";
-import DatePicker from "react-date-picker";
+import React, { ChangeEvent } from "react";
+import { GlobalState, type GlobalStateProps } from "../../types";
 
-import 'react-date-picker/dist/DatePicker.css';
-import 'react-calendar/dist/Calendar.css';
 import "./FilterSection.css"
 
 const FilterSection = (props:GlobalStateProps) => {
@@ -16,11 +13,11 @@ const FilterSection = (props:GlobalStateProps) => {
         })
     }
 
-    const onDateChange = (arg : string, value: DateValue) => {
+    const onDateChange = (arg : string, e: ChangeEvent<HTMLInputElement>) => {
         props.setGlobalState((prev) => {
             return { ...prev, filters: {
                     ...prev.filters,
-                    [arg]: value
+                    [arg]: e.target.value
                 }
             }
         })
@@ -30,8 +27,8 @@ const FilterSection = (props:GlobalStateProps) => {
         <div id="filter-section">
             <input onChange={handleChange} className="textboxes" type="number" name="name" value={props.globalState.filters.long? "":props.globalState.filters.long as number} />
             <input className="textboxes" type="number" name="lat" value={props.globalState.filters.lat? "":props.globalState.filters.lat as number} />
-            <DatePicker onChange={onDateChange.bind(null, "startDate")} value={props.globalState.filters.startDate} />
-            <DatePicker onChange={onDateChange.bind(null, "endDate")} value={props.globalState.filters.endDate} />
+            <input type="date" onChange={onDateChange.bind(null, "startDate")} value={props.globalState.filters.startDate} />
+            <input type="date" onChange={onDateChange.bind(null, "endDate")} value={props.globalState.filters.endDate} />
         </div>
     );
 }

@@ -1,17 +1,17 @@
 import React from "react";
 
-type DateValuePiece = Date | null;
-
-type DateValue = DateValuePiece | [DateValuePiece, DateValuePiece]
-
 type GlobalState = {
     filters: {
         long: number | null;
         lat: number | null;
-        startDate: DateValue | null;
-        endDate: DateValue | null;
+        startDate: string;
+        endDate: string;
     };
-    crimeList: [];
+    crimeList: {
+        page_no: number;
+        page_size: number;
+        data: []
+    };
 }
 
 type GlobalStateProps = {
@@ -19,4 +19,4 @@ type GlobalStateProps = {
     setGlobalState: React.Dispatch<React.SetStateAction<GlobalState>>;
 }
 
-export type { GlobalState, GlobalStateProps, DateValue }
+export type { GlobalState, GlobalStateProps }
