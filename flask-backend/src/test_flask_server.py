@@ -28,3 +28,7 @@ def test_health_endpoint_works_as_expected(client):
 def test_all_data_endpoint_works_as_expected(client):
     response = client.get("/api/alldata")
     assert response.status_code is 200
+
+def test_crime_totals_endpoint_works_as_expected(client):
+    response = client.get("/api/crime_totals")
+    assert response.status_code is 200

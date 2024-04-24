@@ -5,3 +5,7 @@
     max-height: 600px;
     margin: 5vh 0 0 0;
 }
+
+.dropIcon {
+    transform: translateX(-50%);
+}

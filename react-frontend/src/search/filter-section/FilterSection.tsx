@@ -1,13 +1,21 @@
-import React from "react";
-import { DateValue, GlobalState, type GlobalStateProps } from "../../types";
-import DatePicker from "react-date-picker";
+import React, { ChangeEvent, useEffect, useRef } from "react";
+import { GlobalState, type GlobalStateProps } from "../../types";
 
-import 'react-date-picker/dist/DatePicker.css';
-import 'react-calendar/dist/Calendar.css';
 import "./FilterSection.css"
+import { getAllData } from "../../api-interface";
 
 const FilterSection = (props:GlobalStateProps) => {
-    const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const firstUpdate = useRef(true);
+
+    useEffect(() => {
+        if(firstUpdate.current) {
+            firstUpdate.current = false
+            return;
+        }
+        getAllData(props)
+    }, [props.globalState.crimeList.page_no])
+
+    const longLatChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
         props.setGlobalState((prev:GlobalState) => {
             return { ...prev, filters: {
                 ...prev.filters,
@@ -16,11 +24,65 @@ const FilterSection = (props:GlobalStateProps) => {
         })
     }
 
-    const onDateChange = (arg : string, value: DateValue) => {
+    const onDateChangeHandler = (arg : string, e: ChangeEvent<HTMLInputElement>) => {
         props.setGlobalState((prev) => {
             return { ...prev, filters: {
                     ...prev.filters,
-                    [arg]: value
+                    [arg]: e.target.value
+                }
+            }
+        })
+    }
+
+    const onPageChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        props.setGlobalState((prev) => {
+            let page = parseInt(e.target.value)
+            page = Math.max(1, page)
+            return {
+                ...prev,
+                crimeList: {
+                    ...prev.crimeList,
+                    page_no: page
+                }
+            }
+        })
+    }
+
+    const handlePageChange = (type: string) => {
+        if(type === "+") {
+            props.setGlobalState((prev) => {
+                return {
+                    ...prev,
+                    crimeList: {
+                        ...prev.crimeList,
+                        page_no: prev.crimeList.page_no+1
+                    }
+                }
+            })
+        }
+        if(type === "-") {
+            props.setGlobalState((prev) => {
+                return {
+                    ...prev,
+                    crimeList: {
+                        ...prev.crimeList,
+                        page_no: Math.max(prev.crimeList.page_no-1, 1)
+                    }
+                }
+            })
+        }
+    }
+    
+    const handleSubmit = () => {
+        props.setGlobalState((prev) => {
+            if(prev.crimeList.page_no === 1) {
+                getAllData(props)
+            }
+            return {
+                ...prev,
+                crimeList: {
+                    ...prev.crimeList,
+                    page_no: 1
                 }
             }
         })
@@ -28,10 +90,18 @@ const FilterSection = (props:GlobalStateProps) => {
 
     return (
         <div id="filter-section">
-            <input onChange={handleChange} className="textboxes" type="number" name="name" value={props.globalState.filters.long? "":props.globalState.filters.long as number} />
-            <input className="textboxes" type="number" name="lat" value={props.globalState.filters.lat? "":props.globalState.filters.lat as number} />
-            <DatePicker onChange={onDateChange.bind(null, "startDate")} value={props.globalState.filters.startDate} />
-            <DatePicker onChange={onDateChange.bind(null, "endDate")} value={props.globalState.filters.endDate} />
+            <div id="filter-fields">
+                <input onChange={longLatChangeHandler} className="textboxes" type="number" name="name" value={props.globalState.filters.long} />
+                <input onChange={longLatChangeHandler} className="textboxes" type="number" name="lat" value={props.globalState.filters.lat} />
+                <input type="date" max={props.globalState.filters.endDate} onChange={onDateChangeHandler.bind(null, "startDate")} value={props.globalState.filters.startDate} />
+                <input type="date" min={props.globalState.filters.startDate} max={new Date().toJSON().slice(0, 10)} onChange={onDateChangeHandler.bind(null, "endDate")} value={props.globalState.filters.endDate} />
+            </div>
+            <div id="page-fields">
+                <button onClick={handlePageChange.bind(null, "-")}>&lt;</button>
+                <input onChange={onPageChangeHandler} className="textboxes" type="number" name="page" value={props.globalState.crimeList.page_no} />
+                <button onClick={handlePageChange.bind(null, "+")}>&gt;</button>
+            </div>
+            <button onClick={handleSubmit}>Search</button>
         </div>
     );
 }
