@@ -2,8 +2,8 @@ import React from "react";
 
 type GlobalState = {
     filters: {
-        long: number | null;
-        lat: number | null;
+        long: number;
+        lat: number;
         startDate: string;
         endDate: string;
     };

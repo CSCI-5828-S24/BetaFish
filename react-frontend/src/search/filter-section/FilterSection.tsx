@@ -55,7 +55,7 @@ const FilterSection = (props:GlobalStateProps) => {
                     ...prev,
                     crimeList: {
                         ...prev.crimeList,
-                        page_no: props.globalState.crimeList.page_no+1
+                        page_no: prev.crimeList.page_no+1
                     }
                 }
             })
@@ -66,7 +66,7 @@ const FilterSection = (props:GlobalStateProps) => {
                     ...prev,
                     crimeList: {
                         ...prev.crimeList,
-                        page_no: Math.max(props.globalState.crimeList.page_no-1, 1)
+                        page_no: Math.max(prev.crimeList.page_no-1, 1)
                     }
                 }
             })
@@ -88,13 +88,11 @@ const FilterSection = (props:GlobalStateProps) => {
         })
     }
 
-    console.log(props.globalState.crimeList)
-
     return (
         <div id="filter-section">
             <div id="filter-fields">
-                <input onChange={longLatChangeHandler} className="textboxes" type="number" name="name" value={props.globalState.filters.long? "":props.globalState.filters.long as number} />
-                <input onChange={longLatChangeHandler} className="textboxes" type="number" name="lat" value={props.globalState.filters.lat? "":props.globalState.filters.lat as number} />
+                <input onChange={longLatChangeHandler} className="textboxes" type="number" name="name" value={props.globalState.filters.long} />
+                <input onChange={longLatChangeHandler} className="textboxes" type="number" name="lat" value={props.globalState.filters.lat} />
                 <input type="date" max={props.globalState.filters.endDate} onChange={onDateChangeHandler.bind(null, "startDate")} value={props.globalState.filters.startDate} />
                 <input type="date" min={props.globalState.filters.startDate} max={new Date().toJSON().slice(0, 10)} onChange={onDateChangeHandler.bind(null, "endDate")} value={props.globalState.filters.endDate} />
             </div>

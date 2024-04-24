@@ -1,17 +1,37 @@
 import React from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 
 import "leaflet/dist/leaflet.css"
 import "./MapSection.css"
+import { GlobalStateProps } from "../../types";
 
-const MapSection = () => {
+const MapSection = (props: GlobalStateProps) => {
+    const HandleMapClick = () => {
+        const map = useMapEvents({
+            click: (e) => {
+                props.setGlobalState((prev)=> {
+                    return {
+                        ...prev,
+                        filters: {
+                            ...prev.filters,
+                            lat: e.latlng.lat,
+                            long: e.latlng.lng
+                        }
+                    };
+                })
+            },
+        });
+        return <></>;
+    }
+
     return (
         <div id="map-section">
-            <MapContainer center={[40.00943069669764, -105.2668960437206]} zoom={16} scrollWheelZoom={true}>
+            <MapContainer center={[props.globalState.filters.lat, props.globalState.filters.long]} zoom={16} scrollWheelZoom={true}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+                <HandleMapClick />
                 <Marker position={[51.505, -0.09]}>
                     <Popup>
                     A pretty CSS3 popup. <br /> Easily customizable.

@@ -9,7 +9,7 @@ import CrimeListSection from "./list-section/CrimeListSection";
 const Search = (props:GlobalStateProps) => {
     return (
         <div id="search-div">
-            <MapSection />
+            <MapSection globalState={props.globalState} setGlobalState={props.setGlobalState}/>
             <FilterSection globalState={props.globalState} setGlobalState={props.setGlobalState}/>
             <CrimeListSection globalState={props.globalState} setGlobalState={props.setGlobalState}/>
         </div>
