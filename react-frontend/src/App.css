@@ -1,3 +1,13 @@
+.App {
+  width: 80vw;
+  max-width: 1800px;
+  background-color: #2e2222;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
+
 .MultiplySection {
   display: flex;
   flex-direction: column;
@@ -7,5 +17,17 @@
 }
 
 .MultiplySection > * {
+  margin: 10px 0;
+}
+
+.DataDump {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.DataDump > * {
   margin: 10px 0;
 }

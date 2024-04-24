@@ -3,20 +3,29 @@ Group 12: Emily Parker, Ranajit Roy, Jonathan Gorman
 
 # Instructions
 
-Below are the instruction run the we app locally on an linux/ubuntu platform
+Below are the instruction run the we app locally on an linux/ubuntu or windows platform
 
 Install the below packages before proceeding -
 1. Python3
-2. Python packages: redis jsonpickle requests flask flask_cors
-    > pip3 install --upgrade redis jsonpickle requests flask flask_cors
+2. Python packages: redis jsonpickle requests flask flask_cors flask-mysqldb python-dotenv
+    > pip3 install --upgrade redis jsonpickle requests flask flask_cors flask-mysqldb python-dotenv
 3. Node.js 20.x lts
 
 
-FIrst clone the repository
+First clone the repository
 
 > git clone \<repo-clone-url\>
 
-then to build the app, run the commands below in the cloned directory -
+A `.env` file is necessary for the MySQL Connection. Create a `.env` in `\flask-backend\src\` and populate with the following 4 lines
+
+```
+MYSQL_HOST = host
+MYSQL_USER = user
+MYSQL_PASSWORD = password
+MYSQL_DB = databasename
+```
+
+To build the app, run the commands below in the cloned directory -
 
 ```
 npm --prefix ./react-frontend/ ci
@@ -30,7 +39,7 @@ Now there are two options:
 
 ## Run locally
 
-> python3 flask-backend/src/flask-server.pyv
+> python3 flask-backend/src/flask_server.py
 
 ## Run on Docker
 
