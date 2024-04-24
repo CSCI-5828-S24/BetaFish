@@ -63,9 +63,9 @@ def create_app():
             
             values = []
             entries = data['features']
-            timeToFilter = datetime.today() - relativedelta(months=1)
+            timeToFilter = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0) - relativedelta(days=30)
             reportedDateFilter = int(time.mktime(timeToFilter.timetuple()) * 1000)
-            
+            print(reportedDateFilter)
             for row in entries:
                 if(row["attributes"]["REPORTED_DATE"] < reportedDateFilter):
                     continue
