@@ -107,8 +107,20 @@ def create_app():
     def get_all():
         status = 200
         try:
+            pageno = int(request.args["pageno"])
+            if pageno <= 0:
+                pageno = 1
+            pagesize = int(request.args["pagesize"])
+            if pagesize <= 5:
+                pagesize = 5
+            lat = float(request.args["lat"])
+            long = float(request.args["long"])
+            startTime = int(request.args["startTime"])
+            endTime = int(request.args["endTime"])
+            print("reached")
             cursor = mydb.cursor()
-            cursor.execute("SELECT * FROM crime")
+            print(f"SELECT * FROM crime WHERE FIRST_OCCURRENCE_DATE < {endTime} AND FIRST_OCCURRENCE_DATE > {startTime} ORDER BY (POWER(GEO_LAT-{lat}, 2)+POWER(GEO_LON-{long}, 2)) LIMIT {pagesize} OFFSET {(pageno-1)*pagesize}")
+            cursor.execute(f"SELECT * FROM crime WHERE FIRST_OCCURRENCE_DATE < {endTime} AND FIRST_OCCURRENCE_DATE > {startTime} ORDER BY (POWER(GEO_LAT-{lat}, 2)+POWER(GEO_LON-{long}, 2)) LIMIT {pagesize} OFFSET {(pageno-1)*pagesize}")
             raw_data = cursor.fetchall()
             row_headers = [x[0] for x in cursor.description]
             print(row_headers)
@@ -126,7 +138,9 @@ def create_app():
             #     stringOut = stringOut + "\n"
 
             response = {
-                'data' : json_data
+                'data' : json_data,
+                'pageno': pageno,
+                'pagesize': pagesize
             }
         except Exception as error:
             response = { 
