@@ -95,8 +95,8 @@ const FilterSection = (props:GlobalStateProps) => {
             <div id="filter-fields">
                 <input onChange={longLatChangeHandler} className="textboxes" type="number" name="name" value={props.globalState.filters.long? "":props.globalState.filters.long as number} />
                 <input onChange={longLatChangeHandler} className="textboxes" type="number" name="lat" value={props.globalState.filters.lat? "":props.globalState.filters.lat as number} />
-                <input type="date" onChange={onDateChangeHandler.bind(null, "startDate")} value={props.globalState.filters.startDate} />
-                <input type="date" onChange={onDateChangeHandler.bind(null, "endDate")} value={props.globalState.filters.endDate} />
+                <input type="date" max={props.globalState.filters.endDate} onChange={onDateChangeHandler.bind(null, "startDate")} value={props.globalState.filters.startDate} />
+                <input type="date" min={props.globalState.filters.startDate} max={new Date().toJSON().slice(0, 10)} onChange={onDateChangeHandler.bind(null, "endDate")} value={props.globalState.filters.endDate} />
             </div>
             <div id="page-fields">
                 <button onClick={handlePageChange.bind(null, "-")}>&lt;</button>
