@@ -2,6 +2,7 @@ import React, { ChangeEvent } from "react";
 import { GlobalState, type GlobalStateProps } from "../../types";
 
 import "./FilterSection.css"
+import { getAllData } from "../../api-interface";
 
 const FilterSection = (props:GlobalStateProps) => {
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -22,6 +23,11 @@ const FilterSection = (props:GlobalStateProps) => {
             }
         })
     }
+    
+    const handleDump = () => {
+      getAllData(props)
+    }
+    console.log(props.globalState.crimeList)
 
     return (
         <div id="filter-section">
@@ -29,6 +35,7 @@ const FilterSection = (props:GlobalStateProps) => {
             <input className="textboxes" type="number" name="lat" value={props.globalState.filters.lat? "":props.globalState.filters.lat as number} />
             <input type="date" onChange={onDateChange.bind(null, "startDate")} value={props.globalState.filters.startDate} />
             <input type="date" onChange={onDateChange.bind(null, "endDate")} value={props.globalState.filters.endDate} />
+            <button onClick={handleDump}>Database Dump</button>
         </div>
     );
 }
