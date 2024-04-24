@@ -11,11 +11,14 @@ const getAllData = (props: GlobalStateProps) => {
     }))
       .then(response => response.json())
       .then(json => {
-        props.setGlobalState({
-            ...props.globalState,
-            crimeList: {
-                ...props.globalState.crimeList,
-                data: json["data"]
+        props.setGlobalState((prev) => {
+            return {
+                ...props.globalState,
+                fetched: true,
+                crimeList: {
+                    ...props.globalState.crimeList,
+                    data: json["data"]
+                }
             }
         })
       })

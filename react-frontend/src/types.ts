@@ -7,10 +7,11 @@ type GlobalState = {
         startDate: string;
         endDate: string;
     };
+    fetched: boolean;
     crimeList: {
         page_no: number;
         page_size: number;
-        data: []
+        data: any[]
     };
 }
 

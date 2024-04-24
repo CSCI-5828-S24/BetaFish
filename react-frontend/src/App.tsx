@@ -13,6 +13,7 @@ function App() {
       startDate: new Date().toJSON().slice(0, 10),
       endDate: new Date().toJSON().slice(0, 10)
     },
+    fetched: false,
     crimeList: {
       page_no: 1,
       page_size: 10,

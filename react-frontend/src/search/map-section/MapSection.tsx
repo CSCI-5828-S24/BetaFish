@@ -1,13 +1,29 @@
-import React from "react";
-import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
+import React, { useEffect, useRef } from "react";
+import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from "react-leaflet";
+import dropIconImg from "../../assets/location-pin.png"
+import crimeIconImg from "../../assets/crime-pin.png"
 
 import "leaflet/dist/leaflet.css"
 import "./MapSection.css"
 import { GlobalStateProps } from "../../types";
+import { Icon, featureGroup, latLng, marker } from "leaflet";
 
 const MapSection = (props: GlobalStateProps) => {
+
+    const crimeIcon = new Icon({
+        iconUrl: crimeIconImg,
+        iconSize: [64, 64],
+        className: "crimeIcon"
+    })
+
+    const dropIcon = new Icon({
+        iconUrl: dropIconImg,
+        iconSize: [64, 64],
+        className: "dropIcon"
+    })
+
     const HandleMapClick = () => {
-        const map = useMapEvents({
+        const mapEvents = useMapEvents({
             click: (e) => {
                 props.setGlobalState((prev)=> {
                     return {
@@ -21,7 +37,47 @@ const MapSection = (props: GlobalStateProps) => {
                 })
             },
         });
-        return <></>;
+        return null;
+    }
+
+    const RecenterMap = () => {
+        const map = useMap();
+        
+            if(props.globalState.crimeList.data.length > 0 && props.globalState.fetched) {
+                let group = featureGroup(
+                    [
+                        marker(
+                            latLng(
+                                props.globalState.filters.lat,
+                                props.globalState.filters.long
+                            )
+                        ),
+                        ...props.globalState.crimeList.data.map((item) => {
+                            return marker(
+                                latLng(
+                                    parseFloat(item["GEO_LAT"]),
+                                    parseFloat(item["GEO_LON"])
+                                )
+                            )
+                        })
+                    ]
+                )
+                console.log("centering")
+                // map.setView([parseFloat(data[0]["GEO_LAT"]), parseFloat(data[0]["GEO_LON"])]);
+                map.fitBounds(group.getBounds(), {
+                    animate: true,
+                    padding: [10,10]
+                })
+                props.setGlobalState(prev => {
+                    return {
+                        ...prev,
+                        fetched: false
+                    }
+                })
+                
+            }
+        
+        return null;
     }
 
     return (
@@ -32,11 +88,13 @@ const MapSection = (props: GlobalStateProps) => {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 <HandleMapClick />
-                <Marker position={[51.505, -0.09]}>
-                    <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-                    </Popup>
-                </Marker>
+                <RecenterMap />
+                <Marker position={[props.globalState.filters.lat, props.globalState.filters.long]} icon={dropIcon} />
+                {
+                    props.globalState.crimeList.data.map((item) => {
+                        return <Marker position={[parseFloat(item["GEO_LAT"]), parseFloat(item["GEO_LON"])]} icon={crimeIcon}/>
+                    })
+                }
             </MapContainer>
         </div>
     );
