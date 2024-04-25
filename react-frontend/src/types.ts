@@ -8,7 +8,10 @@ type GlobalState = {
         startDate: string;
         endDate: string;
     };
-    fetched: boolean;
+    map: {
+        lat: number;
+        long: number;
+    };
     crimeList: {
         page_no: number;
         page_size: number;

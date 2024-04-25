@@ -23,6 +23,7 @@
   grid-row: 1/2;
   grid-column: 1/2;
   justify-self: center;
+  z-index: 10;
 }
 
 #analytics-div {
@@ -32,10 +33,12 @@
   grid-row: 1/2;
   grid-column: 1/2;
   justify-self: center;
+  z-index: 10;
 }
 
 #search-div.sectionactive, #analytics-div.sectionactive {
   opacity: 100%;
   transform: translateX(0%);
   transition: ease-in 300ms;
+  z-index: 20;
 }

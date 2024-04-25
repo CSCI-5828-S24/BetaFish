@@ -6,6 +6,7 @@
   --font-default-color: #fff4f0;
   --accent-color: #ff936c;
   --background-color: #2b2a2a;
+  --background-light-color: #424040;
   color: var(--font-default-color);
   background-color: var(--background-color);
 }
