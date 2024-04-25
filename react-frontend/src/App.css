@@ -22,6 +22,7 @@
   transition: ease-out 300ms;
   grid-row: 1/2;
   grid-column: 1/2;
+  justify-self: center;
 }
 
 #analytics-div {
@@ -30,6 +31,7 @@
   transition: ease-out 300ms;
   grid-row: 1/2;
   grid-column: 1/2;
+  justify-self: center;
 }
 
 #search-div.sectionactive, #analytics-div.sectionactive {
