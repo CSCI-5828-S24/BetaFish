@@ -4,6 +4,6 @@ import App from './App';
 
 test('renders Database Dump Section', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Database Dump/i);
+  const linkElement = screen.getByText(/Analytics/i);
   expect(linkElement).toBeInTheDocument();
 });

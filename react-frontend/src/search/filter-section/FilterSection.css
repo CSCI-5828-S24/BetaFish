@@ -1,7 +1,101 @@
 #filter-section {
     display: flex;
-    align-items: stretch;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     width: 70vw;
-    margin: 5vh 0;
+    margin: 30px 0 0 0;
+}
+
+#filter-fields {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#filter-section span {
+    position: relative;
+    width: 230px;
+    display: block;
+    margin: 20px 10px;
+    height: 60px;
+}
+
+#filter-section input {
+    position: absolute;
+    width: 202px;
+    outline: none;
+    background-color: var(--background-color);
+    color: var(--font-default-color);
+    font-size: 1.2rem;
+    border-radius: 8px;
+    border: var(--accent-color) 2px solid;
+    padding: 15px 12px;
+}
+
+#filter-section label {
+    z-index: 1;
+    position: absolute;
+    color: var(--accent-color);
+    background-color: var(--background-color);
+    left: 15px;
+    top: -15px;
+    padding: 0 10px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background-color: var(--accent-color);
+    border-radius: 2px;
+}
+
+span#date1, span#date2 {
+    width: 200px;
+}
+
+#filter-section input[type="date"] {
+    width: 172px;
+}
+
+#filter-section button {
+    outline: none;
+    padding: 12px 20px;
+    font-size: 1.3rem;
+    background-color: var(--accent-color);
+    border: var(--accent-color);
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 15px 0;
+    font-weight: 600;
+}
+
+#page-fields {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+#page-fields > span {
+    width: 150px;
+}
+#page-fields input {
+    width: 122px;
+    cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+@media (max-width: 1000px) {
+    #filter-fields {
+        flex-direction: column;
+    }
 }

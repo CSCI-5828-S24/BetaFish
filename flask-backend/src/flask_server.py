@@ -1,7 +1,11 @@
+from functools import cmp_to_key
 from flask import Flask, request, Response
 from flask_cors import CORS
 import jsonpickle
 import os
+import time
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 import logging
 logging.basicConfig(level=logging.DEBUG)
@@ -49,7 +53,7 @@ def create_app():
                 'data' : True
             }
         except Exception as error:
-            response = { 
+            response = {
                 'error' : error 
             }
             status = 500
@@ -63,6 +67,54 @@ def create_app():
             response = {
                 'data' : x * y
             }
+        except Exception as error:
+            response = { 
+                'error' : error 
+            }
+            status = 500
+        response_pickled = jsonpickle.encode(response)
+        return Response(response=response_pickled, status=status, mimetype='application/json')
+    
+    @app.route('/api/crime_freq', methods=["GET"])
+    def get_crime_freq():
+        status = 200
+        try:
+            cursor = mydb.cursor()
+            timeToFilter = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0) - relativedelta(days=29)
+            reportedDateFilter = int(time.mktime(timeToFilter.timetuple()) * 1000)
+            cursor.execute(f"select floor((REPORTED_DATE - {reportedDateFilter}) / 86400000) as day, count(*) as crimes_reported from crime group by 1")
+            raw_data = cursor.fetchall()
+            row_headers = [x[0] for x in cursor.description]
+            print(row_headers)
+            json_data = []
+
+            for r in raw_data:
+                if(int(r[0]) < 0):
+                    continue
+                json_data.append({
+                    'day': int(r[0]),
+                    'crimes': r[1]
+                })
+            
+            added_json_data = []
+            for i in range(0,30):
+                found = False
+                for r in json_data:
+                    if i == r['day']:
+                        found = True
+                        break
+                if not found:
+                    added_json_data.append({
+                        'day': i,
+                        'crimes': 0
+                    })
+            json_data = json_data + added_json_data
+            json_data = sorted(json_data, key=cmp_to_key(lambda x1, x2: x1['day'] - x2['day']))
+            response = {
+                'data' : json_data
+            }
+            
+            print(response)
         except Exception as error:
             response = { 
                 'error' : error 
@@ -101,7 +153,6 @@ def create_app():
             status = 500
         response_pickled = jsonpickle.encode(response)
         return Response(response=response_pickled, status=status, mimetype='application/json')
-       
 
     @app.route('/api/alldata', methods=["GET"])
     def get_all():
@@ -119,8 +170,9 @@ def create_app():
             endTime = int(request.args["endTime"])
             print("reached")
             cursor = mydb.cursor()
-            print(f"SELECT * FROM crime WHERE FIRST_OCCURRENCE_DATE < {endTime} AND FIRST_OCCURRENCE_DATE > {startTime} ORDER BY (POWER(GEO_LAT-{lat}, 2)+POWER(GEO_LON-{long}, 2)) LIMIT {pagesize} OFFSET {(pageno-1)*pagesize}")
-            cursor.execute(f"SELECT * FROM crime WHERE FIRST_OCCURRENCE_DATE < {endTime} AND FIRST_OCCURRENCE_DATE > {startTime} ORDER BY (POWER(GEO_LAT-{lat}, 2)+POWER(GEO_LON-{long}, 2)) LIMIT {pagesize} OFFSET {(pageno-1)*pagesize}")
+            queryToExecute = f"SELECT * FROM crime WHERE REPORTED_DATE < {endTime} AND REPORTED_DATE > {startTime} ORDER BY (POWER(GEO_LAT-{lat}, 2)+POWER(GEO_LON-{long}, 2)) LIMIT {pagesize} OFFSET {(pageno-1)*pagesize}"
+            print(queryToExecute)
+            cursor.execute(queryToExecute)
             raw_data = cursor.fetchall()
             row_headers = [x[0] for x in cursor.description]
             print(row_headers)

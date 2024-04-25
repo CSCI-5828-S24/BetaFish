@@ -1,13 +1,17 @@
 import React from "react";
 
 type GlobalState = {
+    active: string;
     filters: {
         long: number;
         lat: number;
         startDate: string;
         endDate: string;
     };
-    fetched: boolean;
+    map: {
+        lat: number;
+        long: number;
+    };
     crimeList: {
         page_no: number;
         page_size: number;

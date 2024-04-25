@@ -1,9 +1,50 @@
 .App {
-  width: 80vw;
-  max-width: 1800px;
-  background-color: #2e2222;
   display: flex;
+  width: 95vw;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   min-height: 100vh;
+  overflow: hidden;
+}
+
+#SectionContainer {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  justify-content: center;
+  align-content: center;
+}
+
+#search-div {
+  opacity: 0%;
+  transform: translateX(-100%);
+  transition: ease-out 300ms;
+  grid-row: 1/2;
+  grid-column: 1/2;
+  justify-self: center;
+  z-index: 10;
+}
+
+#analytics-div {
+  opacity: 0%;
+  transform: translateX(100%);
+  transition: ease-out 300ms;
+  grid-row: 1/2;
+  grid-column: 1/2;
+  justify-self: center;
+  z-index: 10;
+}
+
+#search-div.sectionactive, #analytics-div.sectionactive {
+  opacity: 100%;
+  transform: translateX(0%);
+  transition: ease-in 300ms;
+  z-index: 20;
+}
+
+@media (max-width: 1000px) {
+  .App {
+      width: 100%;
+  }
 }
