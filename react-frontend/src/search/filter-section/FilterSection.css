@@ -13,17 +13,17 @@
     justify-content: center;
 }
 
-#filter-fields > span {
+#filter-section span {
     position: relative;
-    width: 250px;
+    width: 230px;
     display: block;
     margin: 20px 10px;
     height: 60px;
 }
 
-#filter-fields input {
+#filter-section input {
     position: absolute;
-    width: 226px;
+    width: 206px;
     outline: none;
     background-color: var(--background-color);
     color: var(--font-default-color);
@@ -33,7 +33,7 @@
     padding: 15px 10px;
 }
 
-#filter-fields label {
+#filter-section label {
     z-index: 1;
     position: absolute;
     color: var(--accent-color);
@@ -48,6 +48,39 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-radius: 2px;
 }
 
+span#date1, span#date2 {
+    width: 200px;
+}
+
+#filter-section input[type="date"] {
+    width: 176px;
+}
+
+#filter-section button {
+    outline: none;
+    padding: 12px 20px;
+    font-size: 1.3rem;
+    background-color: var(--accent-color);
+    border: var(--accent-color);
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 15px 0;
+    font-weight: 600;
+}
+
+#page-fields {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+#page-fields > span {
+    width: 150px;
+}
+#page-fields input {
+    width: 126px;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -58,11 +91,4 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     appearance: textfield;
     -moz-appearance: textfield;
-}
-
-input[type=number] {
-}
-
-input[type=number]::before {
-
 }

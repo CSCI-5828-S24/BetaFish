@@ -99,19 +99,22 @@ const FilterSection = (props:GlobalStateProps) => {
                     <input id="longitudebox" onChange={longLatChangeHandler} className="textboxes" type="number" name="name" value={props.globalState.filters.long} />
                     <label htmlFor="longitudebox">Longitude</label>
                 </span>
-                <span>
-                    <input type="date" max={props.globalState.filters.endDate} onChange={onDateChangeHandler.bind(null, "startDate")} value={props.globalState.filters.startDate} />
-                    <label htmlFor="longitudebox">Start date</label>
+                <span id="date1">
+                    <input id="startdate" type="date" max={props.globalState.filters.endDate} onChange={onDateChangeHandler.bind(null, "startDate")} value={props.globalState.filters.startDate} />
+                    <label htmlFor="startdate">Start date</label>
                 </span>
-                <span>
-                    <input type="date" min={props.globalState.filters.startDate} max={new Date().toJSON().slice(0, 10)} onChange={onDateChangeHandler.bind(null, "endDate")} value={props.globalState.filters.endDate} />
-                    <label htmlFor="longitudebox">End date</label>
+                <span id="date2">
+                    <input id="enddate" type="date" min={props.globalState.filters.startDate} max={new Date().toJSON().slice(0, 10)} onChange={onDateChangeHandler.bind(null, "endDate")} value={props.globalState.filters.endDate} />
+                    <label htmlFor="enddate">End date</label>
                 </span>
             </div>
             <button onClick={handleSubmit}>Search</button>
             <div id="page-fields">
                 <button onClick={handlePageChange.bind(null, "-")}>&lt;</button>
-                <input onChange={onPageChangeHandler} className="textboxes" type="number" name="page" value={props.globalState.crimeList.page_no} />
+                <span>
+                    <input id="pageno" onChange={onPageChangeHandler} className="textboxes" type="number" name="page" value={props.globalState.crimeList.page_no} />
+                    <label htmlFor="pageno">Page no.</label>
+                </span>
                 <button onClick={handlePageChange.bind(null, "+")}>&gt;</button>
             </div>
         </div>

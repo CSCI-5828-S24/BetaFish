@@ -1,28 +1,35 @@
 .App {
-  width: 80vw;
-  max-width: 1800px;
   display: flex;
+  width: 95%;
   flex-direction: column;
   justify-content: start;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 #SectionContainer {
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
   justify-content: center;
+  align-content: center;
 }
 
 #search-div {
   opacity: 0%;
   transform: translateX(-100%);
   transition: ease-out 300ms;
+  grid-row: 1/2;
+  grid-column: 1/2;
 }
 
 #analytics-div {
   opacity: 0%;
   transform: translateX(100%);
   transition: ease-out 300ms;
+  grid-row: 1/2;
+  grid-column: 1/2;
 }
 
 #search-div.sectionactive, #analytics-div.sectionactive {
