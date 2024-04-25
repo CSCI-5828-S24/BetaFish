@@ -93,3 +93,9 @@ input[type=number] {
     appearance: textfield;
     -moz-appearance: textfield;
 }
+
+@media (max-width: 1000px) {
+    #filter-fields {
+        flex-direction: column;
+    }
+}

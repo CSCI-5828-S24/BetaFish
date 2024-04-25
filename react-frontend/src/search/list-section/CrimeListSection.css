@@ -4,6 +4,9 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 100px;
+    width: 85vw;
+    overflow-x: auto;
+
 }
 
 table {
@@ -44,4 +47,10 @@ tbody tr:nth-child(even) {
 .datacell {
     padding: 8px 8px;
     border-left: var(--accent-color) 1px solid;
+}
+
+@media (max-width: 1000px) {
+    .CrimeList {
+        align-items: stretch;
+    }
 }

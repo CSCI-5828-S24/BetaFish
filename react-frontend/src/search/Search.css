@@ -5,3 +5,9 @@
     justify-content: space-around;
     margin-bottom: 100px;
 }
+
+@media (max-width: 1000px) {
+    #search-div {
+        width: 100%;
+    }
+}

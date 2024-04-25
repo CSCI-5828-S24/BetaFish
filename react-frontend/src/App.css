@@ -1,6 +1,6 @@
 .App {
   display: flex;
-  width: 95%;
+  width: 95vw;
   flex-direction: column;
   justify-content: start;
   min-height: 100vh;
@@ -41,4 +41,10 @@
   transform: translateX(0%);
   transition: ease-in 300ms;
   z-index: 20;
+}
+
+@media (max-width: 1000px) {
+  .App {
+      width: 100%;
+  }
 }
