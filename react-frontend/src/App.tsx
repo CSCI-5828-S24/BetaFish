@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Search from './search/Search';
 import { GlobalState } from './types';
+import Header from './Header';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
 
   return (
     <div className="App">
+      <Header />
       <Search globalState={globalState} setGlobalState={setGlobalState}/>
     </div>
   );

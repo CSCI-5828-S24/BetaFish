@@ -3,6 +3,8 @@
   justify-content: center;
   align-items: stretch;
   font-size: 20px;
+  --font-default-color: #fff4f0;
+  color: var(--font-default-color);
 }
 
 body {
@@ -12,12 +14,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background:
-  linear-gradient(63deg, #999 23%, transparent 23%) 7px 0,
-  linear-gradient(63deg, transparent 74%, #999 78%),
-  linear-gradient(63deg, transparent 34%, #999 38%, #999 58%, transparent 62%),
-  #444;
-  background-size: 16px 48px;
+  background-color: #2b2a2a;
 }
 
 code {
