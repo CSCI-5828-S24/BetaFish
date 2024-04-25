@@ -91,17 +91,29 @@ const FilterSection = (props:GlobalStateProps) => {
     return (
         <div id="filter-section">
             <div id="filter-fields">
-                <input onChange={longLatChangeHandler} className="textboxes" type="number" name="name" value={props.globalState.filters.long} />
-                <input onChange={longLatChangeHandler} className="textboxes" type="number" name="lat" value={props.globalState.filters.lat} />
-                <input type="date" max={props.globalState.filters.endDate} onChange={onDateChangeHandler.bind(null, "startDate")} value={props.globalState.filters.startDate} />
-                <input type="date" min={props.globalState.filters.startDate} max={new Date().toJSON().slice(0, 10)} onChange={onDateChangeHandler.bind(null, "endDate")} value={props.globalState.filters.endDate} />
+                <span>
+                    <input id="latitudebox" onChange={longLatChangeHandler} className="textboxes" type="number" name="lat" value={props.globalState.filters.lat} />
+                    <label htmlFor="latitudebox">Latitude</label>
+                </span>
+                <span>
+                    <input id="longitudebox" onChange={longLatChangeHandler} className="textboxes" type="number" name="name" value={props.globalState.filters.long} />
+                    <label htmlFor="longitudebox">Longitude</label>
+                </span>
+                <span>
+                    <input type="date" max={props.globalState.filters.endDate} onChange={onDateChangeHandler.bind(null, "startDate")} value={props.globalState.filters.startDate} />
+                    <label htmlFor="longitudebox">Start date</label>
+                </span>
+                <span>
+                    <input type="date" min={props.globalState.filters.startDate} max={new Date().toJSON().slice(0, 10)} onChange={onDateChangeHandler.bind(null, "endDate")} value={props.globalState.filters.endDate} />
+                    <label htmlFor="longitudebox">End date</label>
+                </span>
             </div>
+            <button onClick={handleSubmit}>Search</button>
             <div id="page-fields">
                 <button onClick={handlePageChange.bind(null, "-")}>&lt;</button>
                 <input onChange={onPageChangeHandler} className="textboxes" type="number" name="page" value={props.globalState.crimeList.page_no} />
                 <button onClick={handlePageChange.bind(null, "+")}>&gt;</button>
             </div>
-            <button onClick={handleSubmit}>Search</button>
         </div>
     );
 }

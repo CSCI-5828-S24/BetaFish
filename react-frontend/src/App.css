@@ -14,14 +14,12 @@
 }
 
 #search-div {
-  position: absolute;
   opacity: 0%;
   transform: translateX(-100%);
   transition: ease-out 300ms;
 }
 
 #analytics-div {
-  position: absolute;
   opacity: 0%;
   transform: translateX(100%);
   transition: ease-out 300ms;

@@ -1,7 +1,68 @@
 #filter-section {
     display: flex;
-    align-items: stretch;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     width: 70vw;
     margin: 5vh 0;
+}
+
+#filter-fields {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#filter-fields > span {
+    position: relative;
+    width: 250px;
+    display: block;
+    margin: 20px 10px;
+    height: 60px;
+}
+
+#filter-fields input {
+    position: absolute;
+    width: 226px;
+    outline: none;
+    background-color: var(--background-color);
+    color: var(--font-default-color);
+    font-size: 1.2rem;
+    border-radius: 8px;
+    border: var(--accent-color) 2px solid;
+    padding: 15px 10px;
+}
+
+#filter-fields label {
+    z-index: 1;
+    position: absolute;
+    color: var(--accent-color);
+    background-color: var(--background-color);
+    left: 15px;
+    top: -15px;
+    padding: 0 10px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background-color: var(--accent-color);
+    border-radius: 2px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+input[type=number] {
+}
+
+input[type=number]::before {
+
 }
