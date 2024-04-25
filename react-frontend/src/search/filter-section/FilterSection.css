@@ -23,14 +23,14 @@
 
 #filter-section input {
     position: absolute;
-    width: 206px;
+    width: 202px;
     outline: none;
     background-color: var(--background-color);
     color: var(--font-default-color);
     font-size: 1.2rem;
     border-radius: 8px;
     border: var(--accent-color) 2px solid;
-    padding: 15px 10px;
+    padding: 15px 12px;
 }
 
 #filter-section label {
@@ -53,7 +53,7 @@ span#date1, span#date2 {
 }
 
 #filter-section input[type="date"] {
-    width: 176px;
+    width: 172px;
 }
 
 #filter-section button {
@@ -78,7 +78,7 @@ span#date1, span#date2 {
     width: 150px;
 }
 #page-fields input {
-    width: 126px;
+    width: 122px;
 }
 
 input::-webkit-outer-spin-button,
