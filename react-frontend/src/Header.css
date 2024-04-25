@@ -1,3 +1,12 @@
+#logosplash {
+    display: flex;
+    align-items: center;
+}
+#logo {
+    width: 70px;
+    margin: 0 20px;
+}
+
 #navbar {
     display: flex;
     align-items: center;

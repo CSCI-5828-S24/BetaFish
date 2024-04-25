@@ -15,7 +15,10 @@ const Header = (props: GlobalStateProps) => {
 
     return (
         <div id="header">
-            <h1>Betafish Crime Spotter</h1>
+            <div id="logosplash">
+                <img id="logo" src="/android-chrome-512x512.png" alt="glass"/>
+                <h1>Betafish Crime Spotter</h1>
+            </div>
             <div id="navbar">
                 <input onChange={handleChange} id="navsearch" type="radio" name="nav" value="search" hidden checked={props.globalState.active === "search"}/>
                 <label className="navbutton" htmlFor="navsearch">Search</label>
