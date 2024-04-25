@@ -4,7 +4,10 @@
   align-items: stretch;
   font-size: 20px;
   --font-default-color: #fff4f0;
+  --accent-color: #ff936c;
+  --background-color: #2b2a2a;
   color: var(--font-default-color);
+  background-color: var(--background-color);
 }
 
 body {
@@ -14,7 +17,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #2b2a2a;
 }
 
 code {

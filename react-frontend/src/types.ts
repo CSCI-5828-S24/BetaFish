@@ -1,6 +1,7 @@
 import React from "react";
 
 type GlobalState = {
+    active: string;
     filters: {
         long: number;
         lat: number;

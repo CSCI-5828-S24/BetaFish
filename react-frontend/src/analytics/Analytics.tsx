@@ -1,7 +1,11 @@
-const Analytics = () => {
-    return <div>
+import { GlobalStateProps } from "../types";
 
-    </div>
+const Analytics = (props: GlobalStateProps) => {
+    return (
+        <div id="analytics-div" className={props.globalState.active === "analytics"? "sectionactive":""}>
+            <p>Something</p>
+        </div>
+    );
 }
 
 export default Analytics;

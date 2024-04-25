@@ -3,6 +3,32 @@
   max-width: 1800px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   min-height: 100vh;
+}
+
+#SectionContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+#search-div {
+  position: absolute;
+  opacity: 0%;
+  transform: translateX(-100%);
+  transition: ease-out 300ms;
+}
+
+#analytics-div {
+  position: absolute;
+  opacity: 0%;
+  transform: translateX(100%);
+  transition: ease-out 300ms;
+}
+
+#search-div.sectionactive, #analytics-div.sectionactive {
+  opacity: 100%;
+  transform: translateX(0%);
+  transition: ease-in 300ms;
 }

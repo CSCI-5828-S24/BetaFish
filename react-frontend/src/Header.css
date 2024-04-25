@@ -13,9 +13,9 @@
 
 input[type=radio] + label.navbutton {
     font-weight: 400;
-    border-bottom: #00000000 2px solid;
+    border-bottom: #00000000 4px solid;
 } 
 input[type=radio]:checked + label.navbutton {
     font-weight: 900;
-    border-bottom: var(--font-default-color) 2px solid;
+    border-bottom: var(--accent-color) 4px solid;
 }

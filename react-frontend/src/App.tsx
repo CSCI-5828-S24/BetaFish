@@ -3,11 +3,13 @@ import './App.css';
 import Search from './search/Search';
 import { GlobalState } from './types';
 import Header from './Header';
+import Analytics from './analytics/Analytics';
 
 
 function App() {
 
   const [globalState, setGlobalState] = useState<GlobalState>({
+    active: "search",
     filters: {
       long: -105.2668960437206,
       lat: 40.00943069669764,
@@ -26,8 +28,11 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <Search globalState={globalState} setGlobalState={setGlobalState}/>
+      <Header globalState={globalState} setGlobalState={setGlobalState} />
+      <div id="SectionContainer">
+        <Search globalState={globalState} setGlobalState={setGlobalState} />
+        <Analytics globalState={globalState} setGlobalState={setGlobalState} />
+      </div>
     </div>
   );
 }
