@@ -13,6 +13,7 @@ const FilterSection = (props:GlobalStateProps) => {
             return;
         }
         getAllData(props)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.globalState.crimeList.page_no])
 
     const longLatChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {

@@ -38,6 +38,7 @@ const RecenterMapAllCrimeData = (props: GlobalStateProps) => {
             })
             
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.globalState.crimeList.data]
     )
     
@@ -48,6 +49,7 @@ const RecenterMapSingleCrimeData = (props: GlobalStateProps) => {
     const map = useMap();
     useEffect(() => {
         map.setView([props.globalState.map.lat, props.globalState.map.long]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.globalState.map]);
     return null;
 }
