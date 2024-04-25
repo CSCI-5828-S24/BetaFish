@@ -1,11 +1,24 @@
+#map-section {
+    z-index: 500;
+    overflow: hidden;
+    border-radius: 8px;
+    margin: 5vh 0 0 0;
+}
+
 .leaflet-container {
     width: 70vw;
     height: 50vh;
     max-width: 1700px;
     max-height: 600px;
-    margin: 5vh 0 0 0;
 }
 
 .dropIcon {
     transform: translateX(-50%);
+}
+
+
+@media (max-width: 1000px) {
+    .leaflet-container {
+        width: 90vw;
+    }
 }

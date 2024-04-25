@@ -1,0 +1,30 @@
+#logosplash {
+    display: flex;
+    align-items: center;
+}
+#logo {
+    width: 70px;
+    margin: 0 20px;
+}
+
+#navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbutton {
+    margin: 0 10px;
+    padding: 10px 10px;
+    cursor: pointer;
+    transition: ease-in 100ms;
+}
+
+input[type=radio] + label.navbutton {
+    font-weight: 400;
+    border-bottom: #00000000 4px solid;
+} 
+input[type=radio]:checked + label.navbutton {
+    font-weight: 900;
+    border-bottom: var(--accent-color) 4px solid;
+}

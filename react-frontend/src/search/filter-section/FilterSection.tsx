@@ -13,6 +13,7 @@ const FilterSection = (props:GlobalStateProps) => {
             return;
         }
         getAllData(props)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.globalState.crimeList.page_no])
 
     const longLatChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -91,17 +92,32 @@ const FilterSection = (props:GlobalStateProps) => {
     return (
         <div id="filter-section">
             <div id="filter-fields">
-                <input onChange={longLatChangeHandler} className="textboxes" type="number" name="name" value={props.globalState.filters.long} />
-                <input onChange={longLatChangeHandler} className="textboxes" type="number" name="lat" value={props.globalState.filters.lat} />
-                <input type="date" max={props.globalState.filters.endDate} onChange={onDateChangeHandler.bind(null, "startDate")} value={props.globalState.filters.startDate} />
-                <input type="date" min={props.globalState.filters.startDate} max={new Date().toJSON().slice(0, 10)} onChange={onDateChangeHandler.bind(null, "endDate")} value={props.globalState.filters.endDate} />
-            </div>
-            <div id="page-fields">
-                <button onClick={handlePageChange.bind(null, "-")}>&lt;</button>
-                <input onChange={onPageChangeHandler} className="textboxes" type="number" name="page" value={props.globalState.crimeList.page_no} />
-                <button onClick={handlePageChange.bind(null, "+")}>&gt;</button>
+                <span>
+                    <input id="latitudebox" onChange={longLatChangeHandler} className="textboxes" type="number" name="lat" value={props.globalState.filters.lat} />
+                    <label htmlFor="latitudebox">Latitude</label>
+                </span>
+                <span>
+                    <input id="longitudebox" onChange={longLatChangeHandler} className="textboxes" type="number" name="name" value={props.globalState.filters.long} />
+                    <label htmlFor="longitudebox">Longitude</label>
+                </span>
+                <span id="date1">
+                    <input id="startdate" type="date" max={props.globalState.filters.endDate} onChange={onDateChangeHandler.bind(null, "startDate")} value={props.globalState.filters.startDate} />
+                    <label htmlFor="startdate">Start date</label>
+                </span>
+                <span id="date2">
+                    <input id="enddate" type="date" min={props.globalState.filters.startDate} max={new Date().toJSON().slice(0, 10)} onChange={onDateChangeHandler.bind(null, "endDate")} value={props.globalState.filters.endDate} />
+                    <label htmlFor="enddate">End date</label>
+                </span>
             </div>
             <button onClick={handleSubmit}>Search</button>
+            <div id="page-fields">
+                <button onClick={handlePageChange.bind(null, "-")}>&lt;</button>
+                <span>
+                    <input id="pageno" onChange={onPageChangeHandler} className="textboxes" type="number" name="page" value={props.globalState.crimeList.page_no} />
+                    <label htmlFor="pageno">Page no.</label>
+                </span>
+                <button onClick={handlePageChange.bind(null, "+")}>&gt;</button>
+            </div>
         </div>
     );
 }
