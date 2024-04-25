@@ -42,7 +42,7 @@ def create_app():
 
         if (len(tables) == 0 or 'crime' not in tables[0]):
             app.logger.info("Recreate crime table")
-            table_creation_script = "CREATE TABLE IF NOT EXISTS `crime` (OBJECTID int NOT NULL UNIQUE, INCIDENT_ID double, OFFENSE_ID varchar(20), OFFENSE_CODE varchar(4), OFFENSE_CODE_EXTENSION int, OFFENSE_TYPE_ID varchar(30), OFFENSE_CATEGORY_ID varchar(30), FIRST_OCCURRENCE_DATE long, LAST_OCCURRENCE_DATE long, REPORTED_DATE long, INCIDENT_ADDRESS varchar(100), GEO_X double, GEO_Y double, GEO_LON double, GEO_LAT double, DISTRICT_ID varchar(3), PRECINCT_ID varchar(4), NEIGHBORHOOD_ID varchar(100), IS_CRIME int, IS_TRAFFIC int, VICTIM_COUNT double, PRIMARY KEY (`OBJECTID`));"
+            table_creation_script = "CREATE TABLE IF NOT EXISTS `crime` (OBJECTID int NOT NULL UNIQUE, INCIDENT_ID double, OFFENSE_ID varchar(20), OFFENSE_CODE varchar(4), OFFENSE_CODE_EXTENSION int, OFFENSE_TYPE_ID varchar(30), OFFENSE_CATEGORY_ID varchar(30), FIRST_OCCURRENCE_DATE long, LAST_OCCURRENCE_DATE long, REPORTED_DATE BIGINT NOT NULL, INCIDENT_ADDRESS varchar(100), GEO_X double, GEO_Y double, GEO_LON double, GEO_LAT double, DISTRICT_ID varchar(3), PRECINCT_ID varchar(4), NEIGHBORHOOD_ID varchar(100), IS_CRIME int, IS_TRAFFIC int, VICTIM_COUNT double, PRIMARY KEY (`OBJECTID`));"
             cursor.execute(table_creation_script)
 
         cursor.execute("DELETE FROM crime")
@@ -67,6 +67,8 @@ def create_app():
             reportedDateFilter = int(time.mktime(timeToFilter.timetuple()) * 1000)
             print(reportedDateFilter)
             for row in entries:
+                if(row["attributes"]["REPORTED_DATE"] is None):
+                    continue
                 if(row["attributes"]["REPORTED_DATE"] < reportedDateFilter):
                     continue
                 rowdata = list(row["attributes"].values())
