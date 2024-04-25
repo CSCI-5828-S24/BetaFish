@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import dropIconImg from "../../assets/location-pin.png"
 import crimeIconImg from "../../assets/crime-pin.png"
@@ -23,7 +23,7 @@ const MapSection = (props: GlobalStateProps) => {
     })
 
     const HandleMapClick = () => {
-        const mapEvents = useMapEvents({
+        useMapEvents({
             click: (e) => {
                 props.setGlobalState((prev)=> {
                     return {
@@ -92,7 +92,11 @@ const MapSection = (props: GlobalStateProps) => {
                 <Marker position={[props.globalState.filters.lat, props.globalState.filters.long]} icon={dropIcon} />
                 {
                     props.globalState.crimeList.data.map((item) => {
-                        return <Marker position={[parseFloat(item["GEO_LAT"]), parseFloat(item["GEO_LON"])]} icon={crimeIcon}/>
+                        return <Marker position={[parseFloat(item["GEO_LAT"]), parseFloat(item["GEO_LON"])]} icon={crimeIcon}>
+                            <Popup>
+                                <p>{item["OFFENSE_TYPE_ID"]}</p>
+                            </Popup>
+                        </Marker>
                     })
                 }
             </MapContainer>
