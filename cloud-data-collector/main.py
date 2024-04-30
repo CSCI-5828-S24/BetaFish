@@ -17,6 +17,7 @@ def collect(request):
 
     mydb = mysql.connector.connect(
         host=os.getenv("MYSQL_HOST"),
+        port=os.getenv("MYSQL_PORT", "3306"),
         user=os.getenv("MYSQL_USER"),
         password=os.getenv("MYSQL_PASSWORD")
     )
@@ -75,6 +76,8 @@ def collect(request):
         cursor.execute(init_query)
 
         mydb.commit()
+    
+    res = requests.get(os.getenv("ANALYZER_URL"))
     
     return "done!!"
 

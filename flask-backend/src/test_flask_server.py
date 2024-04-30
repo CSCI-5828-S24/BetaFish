@@ -1,6 +1,4 @@
 # run tests using pytest or python -m pytest
-import os
-import tempfile
 import pytest
 
 from flask_server import create_app
@@ -26,7 +24,7 @@ def test_health_endpoint_works_as_expected(client):
     assert response.status_code is 200
 
 def test_all_data_endpoint_works_as_expected(client):
-    response = client.get("/api/alldata")
+    response = client.get("/api/alldata?startTime=1713139200000&endTime=1713225600000&lat=39.74956044238265&long=-104.95078325271608&pageno=1&pagesize=20")
     assert response.status_code is 200
 
 def test_crime_totals_endpoint_works_as_expected(client):

@@ -24,4 +24,21 @@ const getAllData = (props: GlobalStateProps) => {
       .catch(error => console.log(error));
 }
 
-export { getAllData }
+const getCrimeCounts = (props: GlobalStateProps) => {
+    fetch ("/api/crime_totals")
+        .then(response => response.json())
+        .then(json => {
+            props.setGlobalState((prev) => {
+                return {
+                    ...prev, 
+                    crimeTotals: {
+                        ...prev.crimeTotals,
+                        data: json["data"]
+                    }
+                }
+            })
+        })
+        .catch(error => console.log(error))
+}
+
+export { getAllData, getCrimeCounts }

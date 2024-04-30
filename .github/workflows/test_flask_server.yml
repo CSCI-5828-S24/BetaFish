@@ -1,0 +1,25 @@
+name: flask server test
+
+on: [push, workflow_dispatch]
+
+env:
+  MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+  MYSQL_USER: ${{ secrets.MYSQL_USER }}
+  MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+  MYSQL_DB: ${{ secrets.MYSQL_DB }}
+  MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+
+jobs:
+  run-python-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with: 
+        python-version: '3.x'
+    - name: Install dependencies
+      working-directory: ./flask-backend
+      run: python -m pip install -r requirements.txt
+    - name: Test with pytest
+      run: python -m pytest

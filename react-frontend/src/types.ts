@@ -17,6 +17,9 @@ type GlobalState = {
         page_size: number;
         data: any[]
     };
+    crimeTotals: {
+        data: any[]
+    }
 }
 
 type GlobalStateProps = {
