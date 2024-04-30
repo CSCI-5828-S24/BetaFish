@@ -11,10 +11,11 @@ import {
     PointElement,
     LineElement,
   } from 'chart.js';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Bar } from "react-chartjs-2";
 import { Line } from "react-chartjs-2";
-import { getCrimeCounts } from "../api-interface";
+import { getCrimeFreq, getCrimeTotals } from "../api-interface";
+import "./Analytics.css"
 
 ChartJS.register(
     CategoryScale,
@@ -32,6 +33,9 @@ ChartJS.register(
     responsive: true,
     plugins: {
       legend: {
+        labels: {
+          color: '#ffffff',
+        },
         position: 'top' as const,
       },
       title: {
@@ -45,25 +49,14 @@ ChartJS.register(
       },
     },
   };
-  
-  const bar_labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  
-  export const bar_data = {
-    labels: bar_labels,
-    datasets: [
-      {
-        label: 'Crime Totals',
-        data: [1,2,3,4,5,6,7],
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      }
-    ],
-  };
 
   export const line_options = {
     responsive: true,
     plugins: {
       legend: {
+        labels: {
+          color: '#ffffff',
+        },
         position: 'top' as const,
       },
       title: {
@@ -75,31 +68,36 @@ ChartJS.register(
             weight: 500,
         }
       },
+      scales: {
+        yAxes: [{
+          ticks: {
+              fontColor: '#fff'
+          }
+        }],
+        xAxes: [{
+          ticks: {
+              fontColor: '#fff'
+          }
+        }]
+      }
     },
   };
 
-  const line_labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-  export const line_data = {
-    labels: line_labels,
-    datasets: [
-      {
-        label: 'Crime Frequency',
-        data:  [2,3,1,7,6,9,7],
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)'
-      }
-    ],
-  };
 
 const Analytics = (props: GlobalStateProps) => {   
 
+    useEffect(() => {
+      getCrimeFreq(props)
+      getCrimeTotals(props)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <div id="analytics-div" className={props.globalState.active === "analytics"? "sectionactive":""}>
-            <p>Something</p>
-            <Bar options={bar_options} data={bar_data} />
-            <p>----- BREAK -----</p>
-            <Line options={line_options} data={line_data} />
+            <br/>
+            <Bar id="first-chart" options={bar_options} data={props.globalState.analytics.totals} />
+            <br/>
+            <Line id="second-chart" options={line_options} data={props.globalState.analytics.freq} />
         </div>
     );
 }

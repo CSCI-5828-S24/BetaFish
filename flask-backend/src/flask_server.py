@@ -1,5 +1,5 @@
 from functools import cmp_to_key
-from flask import Flask, request, Response
+from flask import Flask, request, Response, g
 from flask_cors import CORS
 import jsonpickle
 import os
@@ -23,13 +23,16 @@ def create_app():
     app.config['MYSQL_PASSWORD'] = os.getenv("MYSQL_PASSWORD")
     app.config['MYSQL_DB'] = os.getenv("MYSQL_DB")
  
-    mydb = mysql.connector.connect(
-        host=os.getenv("MYSQL_HOST"),
-        user=os.getenv("MYSQL_USER"),
-        port=os.getenv("MYSQL_PORT", "3306"),
-        password=os.getenv("MYSQL_PASSWORD"),
-        database=os.getenv("MYSQL_DB")
-    )
+    def getDB():
+        if 'db' not in g or not g.db.is_connected():
+            g.db = mysql.connector.connect(
+                host=os.getenv("MYSQL_HOST"),
+                user=os.getenv("MYSQL_USER"),
+                port=os.getenv("MYSQL_PORT", "3306"),
+                password=os.getenv("MYSQL_PASSWORD"),
+                database=os.getenv("MYSQL_DB")
+            )
+        return g.db;
     # mysql = MySQL(app)
     
 
@@ -77,6 +80,7 @@ def create_app():
     def get_crime_freq():
         status = 200
         try:
+            mydb = getDB()
             cursor = mydb.cursor()
             queryToExecute = f"SELECT * FROM crime_freq"
             print(queryToExecute)
@@ -107,6 +111,7 @@ def create_app():
     def get_crime_totals():
         status = 200
         try:
+            mydb = getDB()
             cursor = mydb.cursor()
             queryToExecute = "SELECT * FROM crime_totals"
             print(queryToExecute)
@@ -139,6 +144,7 @@ def create_app():
     def get_all():
         status = 200
         try:
+            mydb = getDB()
             pageno = int(request.args["pageno"])
             if pageno <= 0:
                 pageno = 1

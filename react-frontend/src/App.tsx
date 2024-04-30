@@ -27,6 +27,30 @@ function App() {
     },
     crimeTotals: {
       data: []
+    },
+    analytics: {
+      freq: {
+        labels: [],
+        datasets: [
+          {
+            label: 'Crime Frequency',
+            data:  [],
+            borderColor: '#ff936c',
+            backgroundColor: '#ff936c'
+          }
+        ]
+      },
+      totals: {
+        labels: [],
+        datasets: [
+          {
+            label: 'Crime Totals',
+            data: [],
+            borderColor: '#ff936c',
+            backgroundColor: '#ff936c',
+          }
+        ],
+      },
     }
   });
 
