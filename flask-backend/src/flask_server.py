@@ -1,11 +1,8 @@
 from functools import cmp_to_key
-from flask import Flask, request, Response
+from flask import Flask, request, Response, g
 from flask_cors import CORS
 import jsonpickle
 import os
-import time
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
 
 import logging
 logging.basicConfig(level=logging.DEBUG)
@@ -26,12 +23,16 @@ def create_app():
     app.config['MYSQL_PASSWORD'] = os.getenv("MYSQL_PASSWORD")
     app.config['MYSQL_DB'] = os.getenv("MYSQL_DB")
  
-    mydb = mysql.connector.connect(
-        host=os.getenv("MYSQL_HOST"),
-        user=os.getenv("MYSQL_USER"),
-        password=os.getenv("MYSQL_PASSWORD"),
-        database=os.getenv("MYSQL_DB")
-    )
+    def getDB():
+        if 'db' not in g or not g.db.is_connected():
+            g.db = mysql.connector.connect(
+                host=os.getenv("MYSQL_HOST"),
+                user=os.getenv("MYSQL_USER"),
+                port=os.getenv("MYSQL_PORT", "3306"),
+                password=os.getenv("MYSQL_PASSWORD"),
+                database=os.getenv("MYSQL_DB")
+            )
+        return g.db;
     # mysql = MySQL(app)
     
 
@@ -60,56 +61,39 @@ def create_app():
         response_pickled = jsonpickle.encode(response)
         return Response(response=response_pickled, status=status, mimetype='application/json')
 
-    @app.route('/api/multiply/<int:x>/<int:y>', methods=["GET"])
-    def multiply(x, y):
-        status = 200
-        try:
-            response = {
-                'data' : x * y
-            }
-        except Exception as error:
-            response = { 
-                'error' : error 
-            }
-            status = 500
-        response_pickled = jsonpickle.encode(response)
-        return Response(response=response_pickled, status=status, mimetype='application/json')
+    # @app.route('/api/multiply/<int:x>/<int:y>', methods=["GET"])
+    # def multiply(x, y):
+    #     status = 200
+    #     try:
+    #         response = {
+    #             'data' : x * y
+    #         }
+    #     except Exception as error:
+    #         response = { 
+    #             'error' : error 
+    #         }
+    #         status = 500
+    #     response_pickled = jsonpickle.encode(response)
+    #     return Response(response=response_pickled, status=status, mimetype='application/json')
     
     @app.route('/api/crime_freq', methods=["GET"])
     def get_crime_freq():
         status = 200
         try:
+            mydb = getDB()
             cursor = mydb.cursor()
-            timeToFilter = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0) - relativedelta(days=29)
-            reportedDateFilter = int(time.mktime(timeToFilter.timetuple()) * 1000)
-            cursor.execute(f"select floor((REPORTED_DATE - {reportedDateFilter}) / 86400000) as day, count(*) as crimes_reported from crime group by 1")
+            queryToExecute = f"SELECT * FROM crime_freq"
+            print(queryToExecute)
+            cursor.execute(queryToExecute)
             raw_data = cursor.fetchall()
             row_headers = [x[0] for x in cursor.description]
             print(row_headers)
             json_data = []
 
             for r in raw_data:
-                if(int(r[0]) < 0):
-                    continue
-                json_data.append({
-                    'day': int(r[0]),
-                    'crimes': r[1]
-                })
+                json_data.append(dict(zip(row_headers, r)))
             
-            added_json_data = []
-            for i in range(0,30):
-                found = False
-                for r in json_data:
-                    if i == r['day']:
-                        found = True
-                        break
-                if not found:
-                    added_json_data.append({
-                        'day': i,
-                        'crimes': 0
-                    })
-            json_data = json_data + added_json_data
-            json_data = sorted(json_data, key=cmp_to_key(lambda x1, x2: x1['day'] - x2['day']))
+            json_data = sorted(json_data, key=cmp_to_key(lambda x1, x2: x1['DAY'] - x2['DAY']))
             response = {
                 'data' : json_data
             }
@@ -127,8 +111,11 @@ def create_app():
     def get_crime_totals():
         status = 200
         try:
+            mydb = getDB()
             cursor = mydb.cursor()
-            cursor.execute("SELECT * FROM crime")
+            queryToExecute = "SELECT * FROM crime_totals"
+            print(queryToExecute)
+            cursor.execute(queryToExecute)
             raw_data = cursor.fetchall()
             row_headers = [x[0] for x in cursor.description]
             print(row_headers)
@@ -137,14 +124,13 @@ def create_app():
             for r in raw_data:
                 json_data.append(dict(zip(row_headers, r)))
             
-            totals = {}
-            for item in json_data:
-                crime_category = item["OFFENSE_CATEGORY_ID"]
-                if (crime_category not in totals): totals[crime_category] = 1
-                else: totals[crime_category] += 1
+            json_data = sorted(json_data, key=cmp_to_key(lambda x1, x2: x2['COUNT'] - x1['COUNT']))
+            response = {
+                'data' : json_data
+            }
 
             response = {
-                'data' : totals
+                'data' : json_data
             }
         except Exception as error:
             response = { 
@@ -158,6 +144,7 @@ def create_app():
     def get_all():
         status = 200
         try:
+            mydb = getDB()
             pageno = int(request.args["pageno"])
             if pageno <= 0:
                 pageno = 1

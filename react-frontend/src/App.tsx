@@ -24,6 +24,33 @@ function App() {
       page_no: 1,
       page_size: 20,
       data: []
+    },
+    crimeTotals: {
+      data: []
+    },
+    analytics: {
+      freq: {
+        labels: [],
+        datasets: [
+          {
+            label: 'Crime Frequency',
+            data:  [],
+            borderColor: '#ff936c',
+            backgroundColor: '#ff936c'
+          }
+        ]
+      },
+      totals: {
+        labels: [],
+        datasets: [
+          {
+            label: 'Crime Totals',
+            data: [],
+            borderColor: '#ff936c',
+            backgroundColor: '#ff936c',
+          }
+        ],
+      },
     }
   });
 

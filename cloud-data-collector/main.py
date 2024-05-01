@@ -14,9 +14,10 @@ from dotenv import load_dotenv
 @functions_framework.http
 def collect(request):
     load_dotenv()
-
+    
     mydb = mysql.connector.connect(
         host=os.getenv("MYSQL_HOST"),
+        port=os.getenv("MYSQL_PORT", "3306"),
         user=os.getenv("MYSQL_USER"),
         password=os.getenv("MYSQL_PASSWORD")
     )
@@ -59,9 +60,12 @@ def collect(request):
             value = "("
 
             for i in range(len(rowdata)-1):
-                value = value + '"' + str(rowdata[i]) + '", '
+                if rowdata[i] and (isinstance(rowdata[i],int) or isinstance(rowdata[i], float)):
+                    value = value + str(rowdata[i]).strip() + ", "
+                else:
+                    value = value + "'" + str(rowdata[i]).strip() + "', "
 
-            value = value + '"' + str(rowdata[-1]) + '")'
+            value = value  + str(rowdata[-1]) + ')'
 
             values.append(value)
 
@@ -75,6 +79,8 @@ def collect(request):
         cursor.execute(init_query)
 
         mydb.commit()
+    
+    res = requests.get(os.getenv("ANALYZER_URL"))
     
     return "done!!"
 
