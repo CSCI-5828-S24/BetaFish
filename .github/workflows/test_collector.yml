@@ -1,4 +1,4 @@
-name: flask-server-test
+name: collector-test
 
 on: [push, workflow_dispatch]
 
@@ -8,6 +8,7 @@ env:
   MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
   MYSQL_DB: ${{ secrets.MYSQL_DB }}
   MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+  ANALYZER_URL: http://ip.jsontest.com
 
 jobs:
   run-python-tests:
@@ -19,8 +20,8 @@ jobs:
       with: 
         python-version: '3.x'
     - name: Install dependencies
-      working-directory: ./flask-backend
+      working-directory: ./cloud-data-collector
       run: python -m pip install -r requirements.txt
     - name: Test with pytest
-      working-directory: ./flask-backend
+      working-directory: ./cloud-data-collector
       run: python -m pytest
