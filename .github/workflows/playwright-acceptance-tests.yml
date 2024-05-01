@@ -1,0 +1,19 @@
+name: playwright-acceptance-test
+
+on: [push, workflow_dispatch]
+
+jobs:
+  run-python-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with: 
+        python-version: '3.x'
+    - name: Install dependencies
+      working-directory: ./playwright-acceptance-test
+      run: python -m pip install -r requirements.txt
+    - name: Test with pytest
+      working-directory: ./playwright-acceptance-test
+      run: python -m pytest
