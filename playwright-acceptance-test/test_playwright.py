@@ -9,7 +9,8 @@ def test_click_analytics_changes_display(page:Page):
     page.goto("https://betafish-flask-backend-3asud65paa-uc.a.run.app/")
 
     page.get_by_text("Analytics").click()
-    expect(page.get_by_text("Something")).to_be_visible()
+    expect(page.locator("#first-chart")).to_be_visible()
+    expect(page.locator("#second-chart")).to_be_visible()
 
 def test_search_returns_results(page:Page):
     page.goto("https://betafish-flask-backend-3asud65paa-uc.a.run.app/")
