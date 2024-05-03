@@ -1,7 +1,7 @@
 # BetaFish
 Group 12: Emily Parker, Ranajit Roy, Jonathan Gorman
 
-[![analyzer-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_analyzer.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_analyzer.yml) [![collector-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_collector.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_collector.yml) [![flask-server-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_flask_server.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_flask_server.yml)
+[![analyzer-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_analyzer.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_analyzer.yml) [![collector-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_collector.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_collector.yml) [![flask-server-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_flask_server.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_flask_server.yml) [![integration-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/integration-tests.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/integration-tests.yml) [![playwright-acceptance-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/playwright-acceptance-tests.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/playwright-acceptance-tests.yml)
 
 ## Instructions
 
