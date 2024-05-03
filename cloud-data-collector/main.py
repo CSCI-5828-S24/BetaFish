@@ -85,3 +85,5 @@ def collect(request):
     return "done!!"
 
 
+if __name__=="__main__":
+    collect(None)

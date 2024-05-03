@@ -149,3 +149,5 @@ def analyze(request):
     mydb.commit()
     return "success" if status else "failed"
     
+if __name__=="__main__":
+    analyze(None)
