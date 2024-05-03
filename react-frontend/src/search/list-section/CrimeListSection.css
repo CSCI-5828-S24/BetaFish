@@ -37,6 +37,7 @@ tbody tr:nth-child(even) {
 
 .datarow {
     position: relative;
+    cursor: pointer;
 }
 
 .datarow > a {
