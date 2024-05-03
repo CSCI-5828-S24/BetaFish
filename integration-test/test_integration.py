@@ -21,10 +21,10 @@ def test_backend_is_not_storing_beyond_31_days():
     assert response.status_code == 200
 
 # premise: there will always be at least one crime each day
-def test_backend_is_storing_for_last_31_days():
-    timeToFilter = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0) - relativedelta(days=31)
-    startReportedDateFilter = int(time.mktime(timeToFilter.timetuple()) * 1000)
+def test_backend_is_storing_for_last_30_days():
     timeToFilter = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0) - relativedelta(days=30)
+    startReportedDateFilter = int(time.mktime(timeToFilter.timetuple()) * 1000)
+    timeToFilter = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0) - relativedelta(days=29)
     endReportedDateFilter = int(time.mktime(timeToFilter.timetuple()) * 1000)
     response = requests.get(BACKEND_URL + f"/api/alldata?startTime={startReportedDateFilter}&endTime={endReportedDateFilter}&lat=39.74956044238265&long=-104.95078325271608&pageno=1&pagesize=20")
     assert len(response.json()['data']) > 0
