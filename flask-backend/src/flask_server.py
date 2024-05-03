@@ -16,7 +16,7 @@ load_dotenv()
 app = Flask(__name__, static_folder="../../react-frontend/build", static_url_path='/')
 CORS(app, origins=["*"])
 
-def create_app():
+def create_app(graph:dict={}):
     _INF = float("inf")
     app = Flask(__name__, static_folder="../../react-frontend/build", static_url_path='/')
 
@@ -25,10 +25,12 @@ def create_app():
     app.config['MYSQL_PASSWORD'] = os.getenv("MYSQL_PASSWORD")
     app.config['MYSQL_DB'] = os.getenv("MYSQL_DB")
 
-    graph = {}
-    graph['count'] = Counter('total_req', 'total requests on all paths')
-    graph['analytics_latency'] = Histogram('analytics_latency', 'Latency for anaytics API', buckets=(100, 200, 300, _INF))
-    graph['data_latency'] = Histogram('data_latency', 'Latency for data API', buckets=(100, 200, 300, _INF))
+    if 'count' not in graph.keys():
+        graph['count'] = Counter('total_req', 'total requests on all paths')
+    if 'analytics_latency' not in graph.keys():
+        graph['analytics_latency'] = Histogram('analytics_latency', 'Latency for anaytics API', buckets=(100, 200, 300, _INF))
+    if 'data_latency' not in graph.keys():
+        graph['data_latency'] = Histogram('data_latency', 'Latency for data API', buckets=(100, 200, 300, _INF))
     
     def getDB():
         if 'db' not in g or not g.db.is_connected():
