@@ -1,0 +1,1 @@
+Folder for housing integration tests for determining if services are up and running.

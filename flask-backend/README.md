@@ -1,1 +1,3 @@
-Initial Creation of back end for HW5 Testing CI/CD
+## Flask Backend
+
+This Backend host both the APIs and web pages for the web-app

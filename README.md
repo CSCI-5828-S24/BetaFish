@@ -1,9 +1,9 @@
 # BetaFish
 Group 12: Emily Parker, Ranajit Roy, Jonathan Gorman
 
-[![analyzer-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_analyzer.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_analyzer.yml) [![collector-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_collector.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_collector.yml) [![flask-server-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_flask_server.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_flask_server.yml)
+[![analyzer-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_analyzer.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_analyzer.yml) [![collector-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_collector.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_collector.yml) [![flask-server-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_flask_server.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/test_flask_server.yml) [![integration-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/integration-tests.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/integration-tests.yml) [![playwright-acceptance-test](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/playwright-acceptance-tests.yml/badge.svg?branch=main)](https://github.com/CSCI-5828-S24/BetaFish/actions/workflows/playwright-acceptance-tests.yml)
 
-# Instructions
+## Instructions
 
 Below are the instruction run the we app locally on an linux/ubuntu or windows platform
 
@@ -39,11 +39,11 @@ Now there are two options:
 * run with a docker image
 
 
-## Run locally
+### Run locally
 
 > python3 flask-backend/src/flask_server.py
 
-## Run on Docker
+### Run on Docker
 
 In order to run on a docker image, run the below commands:
 
@@ -55,4 +55,16 @@ docker run -p5000:5000 web-app
 Now, the web page should be accessible on port 5000 on localhost
 
 ## Current Completed Architecture
-![image](https://github.com/CSCI-5828-S24/BetaFish/assets/143036094/8c079df8-c48f-47c8-950b-8148625e16a0)
+![image](./diagrams/architecture.png)
+
+## Updated Link to the website
+
+https://betafish-flask-backend-3asud65paa-uc.a.run.app/ (Link may not be active)
+
+
+## UI Samples
+Here are some UI sample below (if the above link does not work) 
+
+![Landing Page](./UI-samples/landing-page.png)
+![Search Results](./UI-samples/search-results.png)
+![Analytics Page](./UI-samples/analytics-page.png)
